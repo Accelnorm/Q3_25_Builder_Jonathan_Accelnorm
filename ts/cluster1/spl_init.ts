@@ -11,9 +11,26 @@ const connection = new Connection("https://api.devnet.solana.com", commitment);
 
 (async () => {
     try {
-        // Start here
-        // const mint = ???
+        // Create a new token mint
+        const mint = await createMint(
+            connection,           // Connection to Solana devnet
+            keypair,             // Payer
+            keypair.publicKey,   // Mint authority
+            null,                // Freeze authority (null = no freeze capability)
+            6                    // Decimals
+        );
+        
+        console.log(`✅ Token mint created successfully!`);
+        console.log(`Mint address: ${mint.toBase58()}`);
+        console.log(`View on Solana Explorer: https://explorer.solana.com/address/${mint.toBase58()}?cluster=devnet`);
     } catch(error) {
         console.log(`Oops, something went wrong: ${error}`)
     }
 })()
+
+/*
+Output:
+✅ Token mint created successfully!
+Mint address: A4AFqpzoB1jKa7s5mKmgZRqhupptP8zomvuKNJDXfnc5
+View on Solana Explorer: https://explorer.solana.com/address/A4AFqpzoB1jKa7s5mKmgZRqhupptP8zomvuKNJDXfnc5?cluster=devnet
+*/
